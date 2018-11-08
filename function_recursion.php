@@ -1,71 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="https://yt3.ggpht.com/a-/ACSszfG1sSR-E1lLu6Bb5G3B0QXdp2lH83O2dvS2ug=s900-mo-c-c0xffffffff-rj-k-no">
+	<title>Керницкий ДЗ-4 php28</title>
+</head>
+<body>
+
+
+<p>10.42. В  некоторых  языках  программирования  (например,  в  Паскале)  не  предусмотрена  операция  возведения  в  степень.  Написать  рекурсивную  функцию для расчета степени n вещественного числа a (n — натуральное число).<p>
+
 <?php
-$bag = [];
 
+	function rec_pow($a, $n){
 
-
-// Добавить в корзину
-	function add($arr, $id, $quantity, $price){
+		if($n <= 0){
+			return $a;
+		}
 		
-		// заполнение массива
-		$arr['sum'] = 0;
-		$arr['total amount'] = 0;
+		return $a * rec_pow($a, $n-2);	
 
-		$arr['items'][] = ['id'=>$id, 'quantity'=>$quantity, 'price'=>$price];
-		
-			
-		// считает общуюю сумму и количество
-		for($i = 0; $i < count($arr['items']); $i++){
-			$arr['sum'] += $arr['items'][$i]['price'];
-			$arr['total amount'] += $arr['items'][$i]['quantity'];
-		}		
-	
-		return $arr;
 	}
-	
-// $bag = add($bag, 1, 1,1);
-// $bag = add($bag, 2, 1,1);
-// $bag = add($bag, 3, 1,1);
-// var_dump($bag);
 
-// Удалить с корзины
-	function remove($arr, $id){
+echo "<hr>".rec_pow(3,3);
 
-		for($i = 0; $i < count($arr['items']); $i++){
-			if($arr['items'][$i]['id'] == $id){
-				unset($arr['items'][$i]);
-			}
-		}
-		return $arr;
-	}
-// $bag = remove($bag,2);
-// var_dump($bag);
-
-// Изменить количество
-function quantity($arr, $id, $n){
-
-	for($i = 0; $i < count($arr['items']); $i++){
-
-		if($arr['items'][$i]['id'] == $id){
-			$arr['items'][$i]['quantity'] = $n;
-		}
-	}
-	return $arr;
-}
-
-// $bag = quantity($bag,1, 44599084);
-// var_dump($bag);
-
-// считает сумму с учетом скидки
-	function discont($sum,$quantity){
-
-		if($quantity < 10 && $sum > 2000){
-			$sum *= 0.93;
-		}elseif ($quantity > 10) {
-			$sum *= 0.9;
-		}
-
-		return $sum;
-	}
 ?>
+
+</body>
+</html>
 
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
