@@ -17,7 +17,14 @@ $bag = [];
 		for($i = 0; $i < count($arr['items']); $i++){
 			$arr['sum'] += $arr['items'][$i]['price'];
 			$arr['total amount'] += $arr['items'][$i]['quantity'];
-		}		
+		}
+
+		// считает сумму с учетом скидки
+		if($arr['total amount'] < 10 && $arr['sum'] > 2000){
+			$arr['sum'] *= 0.93;
+		}elseif ($quantity > 10) {
+			$arr['sum'] *= 0.9;
+		}				
 	
 		return $arr;
 	}
