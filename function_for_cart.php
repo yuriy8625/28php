@@ -1,5 +1,4 @@
 <?php
-
 $bag = [];
 
 // Добавить в корзину
@@ -17,9 +16,9 @@ $bag = [];
 		return $arr;
 	}
 	
-// $bag = add($bag, 1, 10,100);
-// $bag = add($bag, 2, 10,100);
-// $bag = add($bag, 3, 9,100);
+$bag = add($bag, 1, 10,100);
+$bag = add($bag, 2, 10,100);
+$bag = add($bag, 3, 9,100);
 // var_dump($bag);
 
 // Удалить с корзины
@@ -35,10 +34,9 @@ $bag = [];
 	   	
 		// считает сумму с учетом скидки
 			$arr = discont($arr);	
-
+		
 		return $arr;
 	}
-
 // $bag = remove($bag, 2);
 // var_dump($bag);
 
@@ -49,6 +47,7 @@ function quantity($arr, $id, $n){
 
 		if($arr['items'][$i]['id'] == $id){
 			$arr['items'][$i]['quantity'] = $n;
+			$arr['items'][$i]['price'] *= $n;
 		}
 	}
 
@@ -57,9 +56,8 @@ function quantity($arr, $id, $n){
 		
 	return $arr;
 }
-
-$bag = quantity($bag, 1, 445);
-var_dump($bag);
+// $bag = quantity($bag,1, 44);
+// var_dump($bag);
 
 // считает сумму с учетом скидки
 	function discont($arr){
@@ -68,9 +66,9 @@ var_dump($bag);
 		$arr['total amount'] = 0;
 
 		// считает общуюю сумму и количество
-		for($i = 0; $i < count($arr['items']); $i++){
-			$arr['sum'] += $arr['items'][$i]['price'];
-			$arr['total amount'] += $arr['items'][$i]['quantity'];
+		foreach($arr['items'] as $key => $value){
+			$arr['sum'] += $value['price'];
+			$arr['total amount'] += $value['quantity'];
 		}
 
 		// Выбирает какую сделать скидку
