@@ -1,5 +1,23 @@
 <?php
-$bag = [];
+session_start();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<form method="POST">
+	id <input type="text" name="id"><br><br>
+	quantity <input type="number" name="quantity"><br><br>
+	price <input type="number" name="price"><br><br>
+	<input type="submit" name="submit">
+</form>
+
+<?php
 
 // Добавить в корзину
 	function add($arr, $id, $quantity, $price){
@@ -16,21 +34,18 @@ $bag = [];
 		return $arr;
 	}
 	
-$bag = add($bag, 1, 10,100);
-$bag = add($bag, 2, 10,100);
-$bag = add($bag, 3, 9,100);
+// $bag = add($bag, 1, 10,100);
 // var_dump($bag);
 
-// Удалить с корзины
+	// Удалить с корзины
 	function remove($arr, $id){
 
-		for($i = 0; $i < count($arr['items']); $i++){
+		foreach($arr['items'] as $key => $value){
 
-			if($arr['items'][$i]['id'] == $id){
-				unset($arr['items'][$i]);
-			}
-
-	   	}  
+	   		if($value['id'] == $id){
+	   			unset($arr['items'][$key]);
+	   		}
+	   	}
 	   	
 		// считает сумму с учетом скидки
 			$arr = discont($arr);	
@@ -41,21 +56,21 @@ $bag = add($bag, 3, 9,100);
 // var_dump($bag);
 
 // Изменить количество
-function quantity($arr, $id, $n){
+	function quantity($arr, $id, $n){
 
-	for($i = 0; $i < count($arr['items']); $i++){
-
-		if($arr['items'][$i]['id'] == $id){
-			$arr['items'][$i]['quantity'] = $n;
-			$arr['items'][$i]['price'] *= $n;
+		foreach ($arr['items'] as $key => $value) {
+		
+			if($value['id'] == $id){
+				$arr['items'][$key]['quantity'] = $n;
+				$arr['items'][$key]['price'] *= $n;
+			}
 		}
-	}
 
 		// считает сумму с учетом скидки
-			$arr =	discont($arr);	
+		$arr =	discont($arr);	
 		
-	return $arr;
-}
+		return $arr;
+	}
 // $bag = quantity($bag,1, 44);
 // var_dump($bag);
 
@@ -80,5 +95,18 @@ function quantity($arr, $id, $n){
 
 		return  $arr;
 	}
-	
+
+$cart = $_SESSION['cart'];
+
+	if(!empty($_POST['id']) && !empty($_POST['quantity']) && !empty($_POST['price'])) {
+
+		// $bag = add($bag, $_POST['id'], $_POST['quantity'],$_POST['price']);
+
+		// $bag = remove($bag, $_POST['id']);
+	}
+
+
+ $_SESSION['cart'] = $cart;
+var_dump($cart);
+
 ?>
