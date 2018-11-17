@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "cart.php";
+$list = $_SESSION['cart'];
 ?>
 
 <!DOCTYPE html>
@@ -10,9 +11,8 @@ include "cart.php";
 	<title>list.php</title>
 </head>
 <body>
-<?php
-$list = $_SESSION['cart'];
-?>
+
+<a href="add.php">add.php</a>
 <table border="1" cellspacing="0">
 	<tr>
 		<th>Товар</th>

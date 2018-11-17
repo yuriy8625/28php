@@ -3,8 +3,6 @@ session_start();
 ?>
 
 <?php
-$cart = [];
-
 // Добавить в корзину
 	function add($arr, $id, $quantity, $price){
 		$arr = $_SESSION['cart'];
@@ -13,12 +11,30 @@ $cart = [];
 		$arr['sum'] = 0;
 		$arr['total amount'] = 0;
 
-		$arr['items'][] = ['id'=>$id, 'quantity'=>$quantity, 'price'=>$price*$quantity];
+		if(count($arr['items']) > 0){
+
+			foreach ($arr['items'] as $key => $value) {
+		
+				if($value['id'] == $id){
+					$arr['items'][$key]['quantity'] += $quantity;
+					$arr['items'][$key]['price'] *= $arr['items'][$key]['quantity'];
+
+				}else {
+					$arr['items'][] = ['id'=>$id, 'quantity'=>$quantity, 'price'=>$price*$quantity];
+				}
+			}
+
+		}
+
+		if(count($arr['items']) == 0) {
+			$arr['items'][] = ['id'=>$id, 'quantity'=>$quantity, 'price'=>$price*$quantity];
+		}
 
 		// считает сумму с учетом скидки
 			$arr =	discont($arr);	
 
 			$_SESSION['cart'] = $arr;
+			
 		return $arr;
 	}	
 
@@ -39,19 +55,16 @@ $cart = [];
 	}
 
 // Изменить количество
-	function quantity($arr, $id, $n){
+	function quantity($arr, $id, $quantity, $price){
 
 		foreach ($arr['items'] as $key => $value) {
 		
 			if($value['id'] == $id){
-				$arr['items'][$key]['quantity'] = $n;
-				$arr['items'][$key]['price'] *= $n;
+				$arr['items'][$key]['quantity'] += $quantity;
+				$arr['items'][$key]['price'] *= $arr['items'][$key]['quantity'];
 			}
 		}
-
-		// считает сумму с учетом скидки
-		$arr =	discont($arr);
-		
+			
 		return $arr;
 	}
 
@@ -76,5 +89,4 @@ $cart = [];
 
 		return  $arr;
 	}
-
 ?>
