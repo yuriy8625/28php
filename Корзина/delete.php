@@ -1,5 +1,5 @@
 <?php
-// header("Location:list.php");
+header("Location:list.php");
 
 session_start();
 include "cart.php";

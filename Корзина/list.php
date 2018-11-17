@@ -22,14 +22,13 @@ $list = $_SESSION['cart'];
 	</tr>
 	<?php
 	foreach ($list['items'] as $key => $value) {
-		echo "<tr style=\"text-align: center\"><td>".$value['id']."</td><td>".$value['quantity']."</td><td>".$value['price']."</td><td><a href='/delete.php?id=".$value['id']."'>Х</a></td></tr>";
+		echo "<tr style=\"text-align: center\"><td>".$products[$value['id']]['name']."</td><td>".$value['quantity']."</td><td>".$value['price']."</td><td><a href='/delete.php?id=".$value['id']."'>Х</a></td></tr>";
 	}
 
 ?>	
 </table>
 <?php
 echo "<p>К оплате с учетом скидки: ".$list['sum']."</p>";
-var_dump($list);
 ?>
 	
 </body>

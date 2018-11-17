@@ -3,32 +3,44 @@ session_start();
 ?>
 
 <?php
+$cart = [];
+$products = [
+	2=>['name'=>'товар-1', 'price'=>233],
+	7=>['name'=>'товар-2', 'price'=>333],
+	43=>['name'=>'товар-3', 'price'=>332]
+];
 // Добавить в корзину
 	function add($arr, $id, $quantity, $price){
+
 		$arr = $_SESSION['cart'];
+		$z = 'go';
 
 		// заполнение массива
 		$arr['sum'] = 0;
 		$arr['total amount'] = 0;
 
-		if(count($arr['items']) > 0){
+		if(empty($arr['items'])) {
+
+			$arr['items'][] = ['id'=>$id, 'quantity'=>$quantity, 'price'=>$price*$quantity];
+
+		}else {
 
 			foreach ($arr['items'] as $key => $value) {
-		
 				if($value['id'] == $id){
+					$z = 'stop';
 					$arr['items'][$key]['quantity'] += $quantity;
 					$arr['items'][$key]['price'] *= $arr['items'][$key]['quantity'];
-
-				}else {
-					$arr['items'][] = ['id'=>$id, 'quantity'=>$quantity, 'price'=>$price*$quantity];
 				}
+
 			}
 
-		}
+		if($z == 'go') {
 
-		if(count($arr['items']) == 0) {
 			$arr['items'][] = ['id'=>$id, 'quantity'=>$quantity, 'price'=>$price*$quantity];
+
 		}
+		
+	}
 
 		// считает сумму с учетом скидки
 			$arr =	discont($arr);	

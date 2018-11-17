@@ -1,13 +1,6 @@
 <?php
 session_start();
 include "cart.php";
-
-$products = [
-	2=>['name'=>'товар-1', 'price'=>233],
-	7=>['name'=>'товар-2', 'price'=>333],
-	43=>['name'=>'товар-3', 'price'=>332]
-];
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +36,6 @@ $products = [
 	}
 
 var_dump($cart);
-var_dump($_SESSION);
 ?>
 </form>
 
