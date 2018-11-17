@@ -1,9 +1,10 @@
 <?php
-header("Location:list.php");
+// header("Location:list.php");
 
 session_start();
 include "cart.php";
 
-remove($cart, $_GET['id']);
+$delete = $_SESSION['cart'];
+remove($delete, $_GET['id']);
 
 ?>
