@@ -1,15 +1,6 @@
 <?php 
 session_start();
-?>
-<!-- ДЗ:
-переписываем корзину на класс.
-В классе атрибуты:
-items,sum,discount, count
-Методы: 
-конструктор, деструктор,add,delete,calc,getSum,getDiscount,getItems,setSum,setDiscount, setItems
-Класс в отдельном файле. В файлах только вызовы методов класса. -->
 
-<?php
 $products = [
 	2=>['name'=>'товар-1', 'price'=>233],
 	7=>['name'=>'товар-2', 'price'=>333],
@@ -18,11 +9,21 @@ $products = [
 
 class Cart
 {
-	public $items; // элементы корзины
-	public $sum;	// сумма элементов в корзине
-	public $discount; // сумма с учетом скидки
-	public $count; // количество элементов
+	public $cart;
+	private $items; // элементы корзины
+	private $sum;	// сумма элементов в корзине
+	private $discount; // сумма с учетом скидки
+	private $count; // количество элементов
 
+	public function __construct()
+	{
+		$this->cart = $_SESSION['cart'];
+
+		$this->setItems();
+		$this->setSum();
+		$this->setCount();
+		$this->setDiscount();
+	}	
 	
 	public function add($id, $quantity, $price)
 	{
@@ -31,6 +32,7 @@ class Cart
 		// заполнение массива
 		$arr['sum'] = 0;
 		$arr['count'] = 0;
+		$arr['discount'] = 0;
 
 		if(empty($arr['items'])) {
 
@@ -56,16 +58,30 @@ class Cart
 			$arr['count'] += $value['quantity'];
 		}
 
+		// Выбирает какую сделать скидку
+		if($arr['count'] < 10 && $arr['sum'] > 2000){
+			 $arr['discount'] = $arr['sum'] * 0.93;
+		}elseif ($arr['count'] > 10) {
+			 $arr['discount'] = $arr['sum'] *  0.9;
+		}
+
 			$_SESSION['cart'] = $arr;
 			
 		$this->items = $arr['items'];
 		$this->sum = $arr['sum'];
 		$this->count = $arr['count'];
+		$this->discount = $arr['discount'];
+
 	}
 
 	 // Удалить с корзины
-	public function delete($arr, $id){
+	public function delete($id)
+	{
 		$arr = $_SESSION['cart'];
+
+		$arr['sum'] = 0;
+		$arr['count'] = 0;
+		$arr['discount'] = 0;
 
 		foreach($arr['items'] as $key => $value){
 
@@ -79,13 +95,61 @@ class Cart
 			$arr['sum'] += $value['price'];
 			$arr['count'] += $value['quantity'];
 		}
+
+		// Выбирает какую сделать скидку
+		if($arr['count'] < 10 && $arr['sum'] > 2000){
+			 $arr['discount'] = $arr['sum'] * 0.93;
+		}elseif ($arr['count'] > 10) {
+			 $arr['discount'] = $arr['sum'] *  0.9;
+		}
 	   
 		$_SESSION['cart'] = $arr;
 		$this->items = $arr['items'];
 		$this->sum = $arr['sum'];
 		$this->count = $arr['count'];
+		$this->discount = $arr['discount'];
 	}	
 
+	public function setItems()
+	{
+		$this->items = $this->cart['items'];
+	}
+
+	public function setSum()
+	{
+		$this->sum = $this->cart['sum'];
+	}
+
+	public function setDiscount()
+	{
+		$this->discount = $this->cart['discount'];
+	}
+
+
+	public function setCount()
+	{
+		$this->count = $this->cart['count'];
+	}
+
+	public function getItems()
+	{
+		return $this->items ;
+	}
+
+	public function getSum()
+	{
+		return $this->sum;
+	}
+
+	public function getDiscount()
+	{
+		return $this->discount;
+	}
+
+	public function getCount()
+	{
+		return $this->count;
+	}
 }
 
 ?>

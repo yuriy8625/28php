@@ -1,7 +1,7 @@
 <?php
 session_start();
 include "oop_cart.php";
-$list = $_SESSION['cart'];
+
 ?>
 
 <!DOCTYPE html>
@@ -17,20 +17,34 @@ $list = $_SESSION['cart'];
 	<tr>
 		<th>Товар</th>
 		<th>Количество</th>
+		<th>Цена</th>
 		<th>Сумма</th>
 		<th>Удалить</th>
 	</tr>
 	<?php
-	
-	var_dump($cart->items);
-	foreach ($list['items'] as $key => $value) {
-		echo "<tr style=\"text-align: center\"><td>".$products[$value['id']]['name']."</td><td>".$value['quantity']."</td><td>".$value['price']."</td><td><a href='/delete.php?id=".$value['id']."'>Х</a></td></tr>";
+	$cart = new Cart($_SESSION['cart']);
+
+	foreach ($cart->getItems() as $key => $value) {
+		echo "<tr style=\"text-align: center\">
+		<td>".$products[$value['id']]['name']."</td>
+		<td>".$value['quantity']."</td>
+		<td>".$products[$value['id']]['price']."</td>
+		<td>".$value['price']."</td><td><a href='/delete.php?id=".$value['id']."'>Х</a></td>
+		</tr>";
 	}
 
 ?>	
 </table>
 <?php
-echo "<p>К оплате с учетом скидки: ".$list['sum']."</p>";
+echo "<p>Общее количество: ".$cart->getCount()."</p>";
+
+
+	if($cart->getDiscount() > 0){
+		echo "<p>К оплате с учетом скидки: ".$cart->getDiscount()."</p>";
+	}else {
+		echo "<p>К оплате: ".$cart->getSum()."</p>";
+	}
+
 ?>
 	
 </body>
