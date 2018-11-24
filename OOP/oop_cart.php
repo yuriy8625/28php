@@ -29,11 +29,7 @@ class Cart
 	{
 		$arr = $_SESSION['cart'];
 		$z = 'go';
-		// заполнение массива
-		$arr['sum'] = 0;
-		$arr['count'] = 0;
-		$arr['discount'] = 0;
-
+		
 		if(empty($arr['items'])) {
 
 			$arr['items'][] = ['id'=>$id, 'quantity'=>$quantity, 'price'=>$price*$quantity];
@@ -52,6 +48,46 @@ class Cart
 			$arr['items'][] = ['id'=>$id, 'quantity'=>$quantity, 'price'=>$price*$quantity];
 		}		
 	}
+		
+ 		$arr = $this->calc($arr);
+		
+		$_SESSION['cart'] = $arr;
+		
+		$this->items = $arr['items'];
+		$this->sum = $arr['sum'];
+		$this->count = $arr['count'];
+		$this->discount = $arr['discount'];
+
+	}
+
+	 // Удалить с корзины
+	public function delete($id)
+	{
+		$arr = $_SESSION['cart'];
+
+		foreach($arr['items'] as $key => $value){
+
+	   		if($value['id'] == $id){
+	   			unset($arr['items'][$key]);
+	   		}
+	   	}
+
+	    $arr = $this->calc($arr);
+	   
+		$_SESSION['cart'] = $arr;
+		
+		$this->items = $arr['items'];
+		$this->sum = $arr['sum'];
+		$this->count = $arr['count'];
+		$this->discount = $arr['discount'];
+	}
+
+	public function calc($arr)
+	{
+		$arr['sum'] = 0;
+		$arr['count'] = 0;
+		$arr['discount'] = 0;
+
 		// считает сумму и количество
 		foreach($arr['items'] as $key => $value){
 			$arr['sum'] += $value['price'];
@@ -65,49 +101,7 @@ class Cart
 			 $arr['discount'] = $arr['sum'] *  0.9;
 		}
 
-			$_SESSION['cart'] = $arr;
-			
-		$this->items = $arr['items'];
-		$this->sum = $arr['sum'];
-		$this->count = $arr['count'];
-		$this->discount = $arr['discount'];
-
-	}
-
-	 // Удалить с корзины
-	public function delete($id)
-	{
-		$arr = $_SESSION['cart'];
-
-		$arr['sum'] = 0;
-		$arr['count'] = 0;
-		$arr['discount'] = 0;
-
-		foreach($arr['items'] as $key => $value){
-
-	   		if($value['id'] == $id){
-	   			unset($arr['items'][$key]);
-	   		}
-	   	}
-
-	   	// считает сумму и количество
-		foreach($arr['items'] as $key => $value){
-			$arr['sum'] += $value['price'];
-			$arr['count'] += $value['quantity'];
-		}
-
-		// Выбирает какую сделать скидку
-		if($arr['count'] < 10 && $arr['sum'] > 2000){
-			 $arr['discount'] = $arr['sum'] * 0.93;
-		}elseif ($arr['count'] > 10) {
-			 $arr['discount'] = $arr['sum'] *  0.9;
-		}
-	   
-		$_SESSION['cart'] = $arr;
-		$this->items = $arr['items'];
-		$this->sum = $arr['sum'];
-		$this->count = $arr['count'];
-		$this->discount = $arr['discount'];
+		return $arr;
 	}	
 
 	public function setItems()
@@ -150,6 +144,7 @@ class Cart
 	{
 		return $this->count;
 	}
+	
 }
 
 ?>

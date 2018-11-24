@@ -22,8 +22,8 @@ include "oop_cart.php";
 		<th>Удалить</th>
 	</tr>
 	<?php
-	$cart = new Cart($_SESSION['cart']);
-
+	$cart = new Cart();
+if(!empty($cart->getItems())){
 	foreach ($cart->getItems() as $key => $value) {
 		echo "<tr style=\"text-align: center\">
 		<td>".$products[$value['id']]['name']."</td>
@@ -32,7 +32,9 @@ include "oop_cart.php";
 		<td>".$value['price']."</td><td><a href='/delete.php?id=".$value['id']."'>Х</a></td>
 		</tr>";
 	}
-
+}else {
+	echo "<br><b style=\"color:red;\">Корзина пустая</b>";
+}
 ?>	
 </table>
 <?php

@@ -36,6 +36,7 @@ $cart = new Cart();
 	 	$cart->add($_GET['product'], $_GET['quantity'],$products[$_GET['product']]['price']);
 
 	}
+
 ?>
 </form>
 
