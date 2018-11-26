@@ -14,6 +14,7 @@ require_once "user.php";
 <?php
 if(isset($_POST['submit'])){
     $user = new User($users, $_POST['email'], $_POST['pass']);
+    $user->autendificated($_POST['pass']);
 }
 
 if(isset($_SESSION['id'])){
