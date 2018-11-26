@@ -35,4 +35,9 @@ class User
 
     	return false;
     }
+
+    public function getPass()
+    {
+    	return $this->pass;
+    }
 }
