@@ -14,31 +14,35 @@ require_once "recaptcha.php";
 <body>
 
 <?php
-   
-// если существует запрос создаем обьект и аунтефицируем пользователя
-if(isset($_POST['submit'])){
-    $user = new User($users, $_POST['email'], $_POST['pass']);
-    $user->autendificated($_POST['pass']);
-}
-
 // считаем кол-во не правильных входов
 if(empty($_SESSION['id'])){ 
     $_SESSION['error']++;  
 }
 
-//Если пользователь существует - приветствие, если ввел не правильно пароль 5 раз появляется каптча
-// или же просто форма входа
+// Выовд каптчи
+if($_SESSION['error'] >= 6){
+    $error = "<div class=\"g-recaptcha\" data-sitekey=\"6LfaH30UAAAAALFr_HUeRmzgyZxTfpQt3WXcauq7\"></div>";
+}
+
+// Аунтификация с учетом каптчи
+if($data->success){
+    $user = new User($users, $_POST['email'], $_POST['pass']);
+    $user->autendificated($_POST['pass']);
+}
+
+// Аунтификация если ошибок меньше 5
+if(isset($_POST['submit']) && !isset($_POST['g-recaptcha-response'])){
+    $user = new User($users, $_POST['email'], $_POST['pass']);
+    $user->autendificated($_POST['pass']);
+}
+
+// Вывод
 if(isset($_SESSION['id'])){
+
+    $_SESSION['error'] = 0;
+    $error = "";
     $id = $_SESSION['id'];
     echo "<div class=\"login\">Привет : ".$users[$id]['name']." ".$users[$id]['surname']."</div>";
-}elseif($_SESSION['error'] >= 6){
-    echo "<div class=\"login\"> 
-            <form action=\"\" method=\"POST\">
-                <div class=\"g-recaptcha\" data-sitekey=\"6LfaH30UAAAAALFr_HUeRmzgyZxTfpQt3WXcauq7\"></div>
-                <input type=\"submit\" name=\"submit\" value=\"Войти\"><br>
-            </form>
-        </div>";
-    $_SESSION['error'] = 0;
 }else {
     echo "<div class=\"login\"> 
             <form action=\"\" method=\"POST\">
@@ -48,6 +52,7 @@ if(isset($_SESSION['id'])){
                  <label for=\"pass\">Password:
                     <input type=\"pass\" name=\"pass\"><br><br>
                 </label>
+                ".$error."
                 <input type=\"submit\" name=\"submit\" value=\"Войти\"><br>
             </form>
         </div>";
@@ -55,4 +60,3 @@ if(isset($_SESSION['id'])){
 ?>
 </body>
 </html>
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
