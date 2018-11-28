@@ -15,7 +15,7 @@ require_once "recaptcha.php";
 
 <?php
 // считаем кол-во не правильных входов
-if(empty($_SESSION['id'])){ 
+if(empty($_SESSION['id']) && isset($_POST['submit'])){ 
     $_SESSION['error']++;  
 }
 
@@ -57,6 +57,8 @@ if(isset($_SESSION['id'])){
             </form>
         </div>";
 }
+var_dump($_SESSION);
 ?>
 </body>
 </html>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
