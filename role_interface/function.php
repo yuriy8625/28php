@@ -3,7 +3,7 @@ session_start();
 if(isset($_POST['change'])) {
     //Для пользователя
     if ($_SESSION['role'] == 1) {
-        echo "Вы имеете ограниченые возможности";
+        echo "<center><h1>Вы имеете ограниченые возможности</h1></center>";
     }
     //Админ
     elseif ($_SESSION['role'] == 2){

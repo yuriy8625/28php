@@ -27,15 +27,11 @@ class User implements UserInterface
     private $pass;
     private $role;
 
-    public function __construct($users, $email, $pass)
+    public function __construct($id, $pass, $role)
     {
-        foreach ($users as $key => $value) {
-            if ($email == $value['email'] && $pass == $value['password'] && $value['role'] == self::USER) {
-                $this->pass = $value['password'];
-                $this->id = $key;
-                $this->role = $value['role'];
-            }
-        }
+        $this->id = $id;
+        $this->pass = $pass;
+        $this->role = $role;
     }
     public function autendificated($pass)
     {
@@ -59,15 +55,11 @@ class Admin implements UserInterface
     private $pass;
     private $role;
 
-    public function __construct($users, $email, $pass)
+    public function __construct($id, $pass, $role)
     {
-        foreach ($users as $key => $value) {
-            if ($email == $value['email'] && $pass == $value['password'] && $value['role'] == self::ADMIN) {
-                $this->pass = $value['password'];
-                $this->id = $key;
-                $this->role = $value['role'];
-            }
-        }
+        $this->id = $id;
+        $this->pass = $pass;
+        $this->role = $role;
     }
     public function autendificated($pass)
     {
@@ -91,15 +83,11 @@ class Sales_manadger implements UserInterface
     private $pass;
     private $role;
 
-    public function __construct($users, $email, $pass)
+    public function __construct($id, $pass, $role)
     {
-        foreach ($users as $key => $value) {
-            if ($email == $value['email'] && $pass == $value['password'] && $value['role'] == self::SALES_MANADGER) {
-                $this->pass = $value['password'];
-                $this->id = $key;
-                $this->role = $value['role'];
-            }
-        }
+        $this->id = $id;
+        $this->pass = $pass;
+        $this->role = $role;
     }
     public function autendificated($pass)
     {
@@ -123,15 +111,11 @@ class Content_manadger implements UserInterface
     private $pass;
     private $role;
 
-    public function __construct($users, $email, $pass)
+    public function __construct($id, $pass, $role)
     {
-        foreach ($users as $key => $value) {
-            if ($email == $value['email'] && $pass == $value['password'] && $value['role'] == self::CONTENT_MANADGER) {
-                $this->pass = $value['password'];
-                $this->id = $key;
-                $this->role = $value['role'];
-            }
-        }
+        $this->id = $id;
+        $this->pass = $pass;
+        $this->role = $role;
     }
     public function autendificated($pass)
     {
@@ -154,15 +138,11 @@ class Stock_manadger implements UserInterface
     private $pass;
     private $role;
 
-    public function __construct($users, $email, $pass)
+    public function __construct($id, $pass, $role)
     {
-        foreach ($users as $key => $value) {
-            if ($email == $value['email'] && $pass == $value['password'] && $value['role'] == self::STOCK_MANADGER) {
-                $this->pass = $value['password'];
-                $this->id = $key;
-                $this->role = $value['role'];
-            }
-        }
+        $this->id = $id;
+        $this->pass = $pass;
+        $this->role = $role;
     }
     public function autendificated($pass)
     {

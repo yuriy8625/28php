@@ -13,31 +13,45 @@ require "function.php";
 <body>
 
 <?php
+//Кнопка выхода
+if(isset($_POST['out'])) {
+    $_SESSION = [];
+}
 
 if(isset($_POST['submit'])){
-    foreach ($users as $value){
+    foreach ($users as $key=>$value){
         if($_POST['pass'] == $value['password']  && $value['role'] == 1 && $_POST['email'] == $value['email']){
-            $user = new User($users, $_POST['email'], $_POST['pass']);           
-        }if($_POST['pass'] == $value['password'] && $value['role'] == 2 && $_POST['email'] == $value['email']){
-            $user = new Admin($users, $_POST['email'], $_POST['pass']);       
-        }if($_POST['pass'] == $value['password']  && $value['role'] == 3 && $_POST['email'] == $value['email']){
-            $user = new Sales_manadger($users, $_POST['email'], $_POST['pass']);          
+            $user = new User($key, $value['password'], $value['role']);           
         }
-         if($_POST['pass'] == $value['password']  && $value['role'] == 4 && $_POST['email'] == $value['email']){
-            $user = new User($users, $_POST['email'], $_POST['pass']);           
-        }if($_POST['pass'] == $value['password']  && $value['role'] == 5 && $_POST['email'] == $value['email']){
-            $user = new User($users, $_POST['email'], $_POST['pass']);
+        if($_POST['pass'] == $value['password'] && $value['role'] == 2 && $_POST['email'] == $value['email']){
+            $user = new Admin($key, $value['password'], $value['role']);       
+        }
+        if($_POST['pass'] == $value['password']  && $value['role'] == 3 && $_POST['email'] == $value['email']){
+            $user = new Sales_manadger($key, $value['password'], $value['role']);          
+        }
+        if($_POST['pass'] == $value['password']  && $value['role'] == 4 && $_POST['email'] == $value['email']){
+            $user = new User($key, $value['password'], $value['role']);           
+        }
+        if($_POST['pass'] == $value['password']  && $value['role'] == 5 && $_POST['email'] == $value['email']){
+            $user = new User($key, $value['password'], $value['role']);
         }
     }
-        $user->autendificated($_POST['pass']);
-        $user->productEdit();
-}
+
+    $user->autendificated($_POST['pass']);
+    $user->productEdit();
+
+} 
+
 $_SESSION['ob'] = $user;
 // Вывод
 if(isset($_SESSION['id'])){
 
     $id = $_SESSION['id'];
-    echo "<div class=\"login\">Привет : ".$users[$id]['name']." ".$users[$id]['surname']."</div>";
+    echo "<div class=\"login\">Привет : ".$users[$id]['name']." ".$users[$id]['surname']."
+            <form action=\"\" method=\"POST\">
+                <input  class=\"inLog\"  type=\"submit\" name=\"out\" value=\"Выйти\"><br>
+            </form>
+    </div>";
     echo "<div class=\"right\"><form action=\"\" method=\"POST\">
     <legend>Редактирование товаров</legend><br>
 
@@ -74,6 +88,7 @@ if(isset($_SESSION['id'])){
             </form>
         </div>";
 }
+
 ?>
 </body>
 </html>
