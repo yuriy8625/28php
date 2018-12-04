@@ -17,28 +17,20 @@ require "function.php";
 if(isset($_POST['submit'])){
     foreach ($users as $value){
         if($_POST['pass'] == $value['password']  && $value['role'] == 1 && $_POST['email'] == $value['email']){
-            $user = new User($users, $_POST['email'], $_POST['pass']);
-            $user->autendificated($_POST['pass']);
-            $user->productEdit();
+            $user = new User($users, $_POST['email'], $_POST['pass']);           
         }if($_POST['pass'] == $value['password'] && $value['role'] == 2 && $_POST['email'] == $value['email']){
-            $user = new Admin($users, $_POST['email'], $_POST['pass']);
-            $user->autendificated($_POST['pass']);
-            $user->productEdit();
+            $user = new Admin($users, $_POST['email'], $_POST['pass']);       
         }if($_POST['pass'] == $value['password']  && $value['role'] == 3 && $_POST['email'] == $value['email']){
-            $user = new Sales_manadger($users, $_POST['email'], $_POST['pass']);
-            $user->autendificated($_POST['pass']);
-            $user->productEdit();
+            $user = new Sales_manadger($users, $_POST['email'], $_POST['pass']);          
         }
          if($_POST['pass'] == $value['password']  && $value['role'] == 4 && $_POST['email'] == $value['email']){
-            $user = new User($users, $_POST['email'], $_POST['pass']);
-            $user->autendificated($_POST['pass']);
-             $user->productEdit();
+            $user = new User($users, $_POST['email'], $_POST['pass']);           
         }if($_POST['pass'] == $value['password']  && $value['role'] == 5 && $_POST['email'] == $value['email']){
             $user = new User($users, $_POST['email'], $_POST['pass']);
-            $user->autendificated($_POST['pass']);
-            $user->productEdit();
         }
     }
+        $user->autendificated($_POST['pass']);
+        $user->productEdit();
 }
 $_SESSION['ob'] = $user;
 // Вывод
