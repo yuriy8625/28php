@@ -21,26 +21,26 @@ if(isset($_POST['out'])) {
 if(isset($_POST['submit'])){
     foreach ($users as $key=>$value){
         if($_POST['pass'] == $value['password']  && $value['role'] == 1 && $_POST['email'] == $value['email']){
-            $user = new User($key, $value['password'], $value['role']);           
+            $user = new User($key, $value['password']);           
         }
         if($_POST['pass'] == $value['password'] && $value['role'] == 2 && $_POST['email'] == $value['email']){
-            $user = new Admin($key, $value['password'], $value['role']);       
+            $user = new Admin($key, $value['password']);       
         }
         if($_POST['pass'] == $value['password']  && $value['role'] == 3 && $_POST['email'] == $value['email']){
-            $user = new Sales_manadger($key, $value['password'], $value['role']);          
+            $user = new Sales_manadger($key, $value['password']);          
         }
         if($_POST['pass'] == $value['password']  && $value['role'] == 4 && $_POST['email'] == $value['email']){
-            $user = new User($key, $value['password'], $value['role']);           
+            $user = new User($key, $value['password']);           
         }
         if($_POST['pass'] == $value['password']  && $value['role'] == 5 && $_POST['email'] == $value['email']){
-            $user = new User($key, $value['password'], $value['role']);
+            $user = new User($key, $value['password']);
         }
     }
 
     $user->autendificated($_POST['pass']);
     $user->productEdit();
 
-} 
+}
 
 $_SESSION['ob'] = $user;
 // Вывод

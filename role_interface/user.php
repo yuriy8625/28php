@@ -25,13 +25,11 @@ class User implements UserInterface
 {
     private $id;
     private $pass;
-    private $role;
 
-    public function __construct($id, $pass, $role)
+    public function __construct($id, $pass)
     {
         $this->id = $id;
         $this->pass = $pass;
-        $this->role = $role;
     }
     public function autendificated($pass)
     {
@@ -45,7 +43,7 @@ class User implements UserInterface
 
     public function productEdit()
     {
-        $_SESSION['role'] = $this->role;
+        $_SESSION['role'] = self::USER;
     }
 }
 
@@ -53,13 +51,11 @@ class Admin implements UserInterface
 {
     private $id;
     private $pass;
-    private $role;
 
-    public function __construct($id, $pass, $role)
+    public function __construct($id, $pass)
     {
         $this->id = $id;
         $this->pass = $pass;
-        $this->role = $role;
     }
     public function autendificated($pass)
     {
@@ -73,7 +69,7 @@ class Admin implements UserInterface
 
     public function productEdit()
     {
-        $_SESSION['role'] = $this->role;
+        $_SESSION['role'] = self::ADMIN;
     }
 }
 
@@ -81,13 +77,11 @@ class Sales_manadger implements UserInterface
 {
     private $id;
     private $pass;
-    private $role;
 
-    public function __construct($id, $pass, $role)
+    public function __construct($id, $pass)
     {
         $this->id = $id;
         $this->pass = $pass;
-        $this->role = $role;
     }
     public function autendificated($pass)
     {
@@ -101,7 +95,7 @@ class Sales_manadger implements UserInterface
 
     public function productEdit()
     {
-        $_SESSION['role'] = $this->role;
+        $_SESSION['role'] = self::SALES_MANADGER;
     }
 }
 
@@ -109,13 +103,11 @@ class Content_manadger implements UserInterface
 {
     private $id;
     private $pass;
-    private $role;
 
-    public function __construct($id, $pass, $role)
+    public function __construct($id, $pass)
     {
         $this->id = $id;
         $this->pass = $pass;
-        $this->role = $role;
     }
     public function autendificated($pass)
     {
@@ -129,25 +121,23 @@ class Content_manadger implements UserInterface
 
     public function productEdit()
     {
-        $_SESSION['role'] = $this->role;
+        $_SESSION['role'] = self::CONTENT_MANADGER;
     }
 }
 class Stock_manadger implements UserInterface
 {
     private $id;
     private $pass;
-    private $role;
 
-    public function __construct($id, $pass, $role)
+    public function __construct($id, $pass)
     {
         $this->id = $id;
         $this->pass = $pass;
-        $this->role = $role;
     }
     public function autendificated($pass)
     {
         if($pass == $this->pass){
-            $_SESSION['id'] = $this->id;
+            $_SESSION['id'] = self::STOCK_MANADGER;
             return true;
         }
 

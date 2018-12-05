@@ -26,7 +26,7 @@ if(isset($_POST['change'])) {
     elseif ($_SESSION['role'] == 5  && empty($_POST['product_info']) && empty($_POST['name_product']) && empty($_POST['price'])){
         $_SESSION['change'] = ['count'=>$_POST['count']];
     } else {
-        echo "<h1>Вы не имеете полномочий на данную операцию</h1>";
+        echo "<center><h1>Вы не имеете полномочий на данную операцию</h1></center>";
     }
 }
 ?>
