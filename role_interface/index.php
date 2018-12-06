@@ -30,10 +30,10 @@ if(isset($_POST['submit'])){
             $user = new Sales_manadger($key, $value['password']);          
         }
         if($_POST['pass'] == $value['password']  && $value['role'] == 4 && $_POST['email'] == $value['email']){
-            $user = new User($key, $value['password']);           
+            $user = new Content_manadger($key, $value['password']);           
         }
         if($_POST['pass'] == $value['password']  && $value['role'] == 5 && $_POST['email'] == $value['email']){
-            $user = new User($key, $value['password']);
+            $user = new Stock_manadger($key, $value['password']);
         }
     }
 

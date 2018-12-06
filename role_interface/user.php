@@ -47,106 +47,38 @@ class User implements UserInterface
     }
 }
 
-class Admin implements UserInterface
+class Admin extends User 
 {
-    private $id;
-    private $pass;
-
-    public function __construct($id, $pass)
-    {
-        $this->id = $id;
-        $this->pass = $pass;
-    }
-    public function autendificated($pass)
-    {
-        if($pass == $this->pass){
-            $_SESSION['id'] = $this->id;
-            return true;
-        }
-
-        return false;
-    }
-
+    
     public function productEdit()
     {
         $_SESSION['role'] = self::ADMIN;
     }
 }
 
-class Sales_manadger implements UserInterface
+class Sales_manadger extends User
 {
-    private $id;
-    private $pass;
-
-    public function __construct($id, $pass)
-    {
-        $this->id = $id;
-        $this->pass = $pass;
-    }
-    public function autendificated($pass)
-    {
-        if($pass == $this->pass){
-            $_SESSION['id'] = $this->id;
-            return true;
-        }
-
-        return false;
-    }
-
+    
     public function productEdit()
     {
         $_SESSION['role'] = self::SALES_MANADGER;
     }
 }
 
-class Content_manadger implements UserInterface
+class Content_manadger extends User
 {
-    private $id;
-    private $pass;
-
-    public function __construct($id, $pass)
-    {
-        $this->id = $id;
-        $this->pass = $pass;
-    }
-    public function autendificated($pass)
-    {
-        if($pass == $this->pass){
-            $_SESSION['id'] = $this->id;
-            return true;
-        }
-
-        return false;
-    }
-
+    
     public function productEdit()
     {
         $_SESSION['role'] = self::CONTENT_MANADGER;
     }
 }
-class Stock_manadger implements UserInterface
+class Stock_manadger extends User
 {
-    private $id;
-    private $pass;
-
-    public function __construct($id, $pass)
-    {
-        $this->id = $id;
-        $this->pass = $pass;
-    }
-    public function autendificated($pass)
-    {
-        if($pass == $this->pass){
-            $_SESSION['id'] = self::STOCK_MANADGER;
-            return true;
-        }
-
-        return false;
-    }
-
+    
     public function productEdit()
     {
-        $_SESSION['role'] = $this->role;
+        $_SESSION['role'] = self::STOCK_MANADGER;
     }
 }
 ?>
