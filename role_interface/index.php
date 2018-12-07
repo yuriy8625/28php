@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once "user.php";
-require "function.php";
+// require "function.php";
 ?>
 <!doctype html>
 <html lang="ru">
@@ -20,31 +20,38 @@ if(isset($_POST['out'])) {
 
 if(isset($_POST['submit'])){
     foreach ($users as $key=>$value){
-        if($_POST['pass'] == $value['password']  && $value['role'] == 1 && $_POST['email'] == $value['email']){
+        if($_POST['pass'] == $value['password']  && $value['role'] == 'User' && $_POST['email'] == $value['email']){
             $user = new User($key, $value['password']);           
         }
-        if($_POST['pass'] == $value['password'] && $value['role'] == 2 && $_POST['email'] == $value['email']){
+        if($_POST['pass'] == $value['password'] && $value['role'] == 'Admin' && $_POST['email'] == $value['email']){
             $user = new Admin($key, $value['password']);       
         }
-        if($_POST['pass'] == $value['password']  && $value['role'] == 3 && $_POST['email'] == $value['email']){
+        if($_POST['pass'] == $value['password']  && $value['role'] == 'Sales_manadger' && $_POST['email'] == $value['email']){
             $user = new Sales_manadger($key, $value['password']);          
         }
-        if($_POST['pass'] == $value['password']  && $value['role'] == 4 && $_POST['email'] == $value['email']){
+        if($_POST['pass'] == $value['password']  && $value['role'] == 'Content_manadger' && $_POST['email'] == $value['email']){
             $user = new Content_manadger($key, $value['password']);           
         }
-        if($_POST['pass'] == $value['password']  && $value['role'] == 5 && $_POST['email'] == $value['email']){
+        if($_POST['pass'] == $value['password']  && $value['role'] == 'Stock_manadger' && $_POST['email'] == $value['email']){
             $user = new Stock_manadger($key, $value['password']);
         }
     }
-
-    $user->autendificated($_POST['pass']);
-    $user->productEdit();
-
+    if(isset($user)){
+         $user->autendificated($_POST['pass']);
+     } else echo "Unknow login or password";
+   
 }
 
-$_SESSION['ob'] = $user;
 // Вывод
 if(isset($_SESSION['id'])){
+
+    $user = $users[$_SESSION['id']];
+    $class = $user['role'];
+    $userObject = new $class($_SESSION['id'],$user['password']);
+
+    if(isset($_POST['change'])){
+        $userObject->productEdit($class);
+    }
 
     $id = $_SESSION['id'];
     echo "<div class=\"login\">Привет : ".$users[$id]['name']." ".$users[$id]['surname']."
